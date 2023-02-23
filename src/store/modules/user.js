@@ -21,8 +21,8 @@ const user = {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_INFO: (state, token) => {
-      state.token = token
+    SET_INFO: (state, userInfo) => {
+      state.userInfo = userInfo
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -34,7 +34,8 @@ const user = {
 
   actions: {
     // 登录
-    Login ({ commit }, userInfo) {
+    Login({ commit }, userInfo) {
+      console.log("获取token中...");
       return new Promise((resolve, reject) => {
         login(userInfo)
           .then((response) => {
@@ -49,7 +50,7 @@ const user = {
     },
 
     // 获取用户信息,此处后期做处理
-    GetInfo ({ commit }) {
+    GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo()
           .then((response) => {
@@ -70,7 +71,7 @@ const user = {
     },
 
     // 登出
-    Logout ({ commit, state }) {
+    Logout({ commit, state }) {
       return new Promise((resolve) => {
         logout(state.token)
           .then(() => {

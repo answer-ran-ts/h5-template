@@ -9,6 +9,11 @@ import { VueAxios } from '@/utils/request'
 import * as tool from '@/utils'
 import req from '@/api/request/index.js'
 import '@/libs/rem'
+import './permission.js'
+if (process.env.NODE_ENV === 'mock') {
+  require('./mock')
+}
+
 Vue.use(Vant);
 Vue.use(VueAxios)
 Vue.config.productionTip = false

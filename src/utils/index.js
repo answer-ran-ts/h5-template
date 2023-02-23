@@ -1,5 +1,5 @@
 
-export function timeFix () {
+export function timeFix() {
   const time = new Date()
   const hour = time.getHours()
   return hour < 9
@@ -14,7 +14,7 @@ export function timeFix () {
 }
 
 // 递归筛选最后一个嵌套对象
-export function filterLastChildren (arr) {
+export function filterLastChildren(arr) {
   for (const item of arr) {
     if (!item.children) return item
     if (item.children && item.children.length) {
@@ -40,6 +40,7 @@ export const dataURLToImage = (dataURL) =>
     img.src = dataURL
   })
 
+// 将dataURL字符串转变为Blob对象
 export const dataURLtoBlob = (dataurl) => {
   var arr = dataurl.split(',')
   // 注意base64的最后面中括号和引号是不转译的
@@ -57,12 +58,36 @@ export const dataURLtoBlob = (dataurl) => {
 }
 
 /**
- * Remove loading animate
- * @param id parent element id or class
- * @param timeout
+ * url参数截取
  */
+export const getUrl = () => {
+  var url = decodeURI(location.href) // 获取url中"?"符后的字串
+  var urls = url.split('?')
+  if (urls.length > 1) {
+    url = urls[1]
+    var theRequest = {}
+    if (url.indexOf('userId') !== -1) {
+      if (url.indexOf('#/') !== -1) {
+        var sms = url.split('#/')
+        url = sms[0]
+      }
+      var str = url
+      var strs = str.split('&')
+      for (var i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+      }
+    }
+  } else {
+    return {}
+  }
+  return theRequest
+}
 
-export function randomWord () {
+
+/**
+ * 获取随机数
+ */
+export function randomWord() {
   var str = ''
   var range = 10
   var arr = [

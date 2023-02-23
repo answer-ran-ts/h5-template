@@ -7,17 +7,14 @@
 import router from './router'
 import storage from 'store'
 import store from './store'
-
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
-
-const allowList = ['/login']
+const allowList = ['/login','/auth']
 
 router.beforeEach(async (to, from, next) => {
-  to.meta && typeof to.meta.title !== 'undefined'
   if (storage.get(ACCESS_TOKEN)) {
-    if (to.path === '/login') {
-      next({ path: 'index' })
+    if (to.path === '/login' || to.path === '/auth') {
+      next({ path: '/' })
     } else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
@@ -31,14 +28,6 @@ router.beforeEach(async (to, from, next) => {
           for (let i = 0, length = accessRoutes.length; i < length; i++) {
             router.addRoute(accessRoutes[i])
           }
-          // console.log(accessRoutes, 46)
-          // 添加首页动态路由
-          const indexRouter = {
-            path: '/index',
-            redirect: accessRoutes[0].path
-          }
-          router.addRoute(indexRouter)
-
           next({ ...to, replace: true })
         } catch (error) {
           store.dispatch('Logout').then(() => {

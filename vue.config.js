@@ -5,9 +5,12 @@
  * @LastEditTime: 2022-11-07 11:34:06
  */
 const path = require('path')
-function resolve(dir) {
+const FileManagerPlugin = require('filemanager-webpack-plugin')
+function resolve (dir) {
   return path.join(__dirname, dir)
 }
+
+console.log(process.env.NODE_ENV);
 // vue.config.js
 const vueConfig = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
@@ -15,7 +18,17 @@ const vueConfig = {
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       const plugns = [
-
+        new FileManagerPlugin({
+          onEnd: {
+            delete: ['./dist.zip'],
+            archive: [
+              {
+                source: './dist',
+                destination: './dist.zip'
+              }
+            ]
+          }
+        })
       ]
       config.plugins.push(...plugns)
       // 打包文件大小配置
@@ -54,7 +67,7 @@ const vueConfig = {
         secure: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/Internet-advert-ssp/dsp-platform-web'
+          '^/api': '/internet'
         }
       }
     }
