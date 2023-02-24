@@ -1,9 +1,4 @@
-/*
- * @Description:
- * @Date: 2022-06-16 09:11:01
- * @LastEditors: ranqi
- * @LastEditTime: 2022-08-16 17:06:01
- */
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import { constantRouterMap } from '@/config/router.config'
